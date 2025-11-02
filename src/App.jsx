@@ -1,35 +1,26 @@
-import React from "react";
-import Navbar from "./component/Navbar";
-import { Route, Routes, useLocation } from "react-router-dom"
-import DashboardLayout from "./pages/dashboard/DashboardLayout.jsx";
-import Home from "./pages/Home.jsx";
-import AddProduct from "./component/dashboard/AddProduct.jsx";
-import ManageProducts from "./component/dashboard/ManageProducts.jsx";
-import AddBanner from "./component/dashboard/AddBanner.jsx";
-import ManageBanners from "./component/dashboard/ManageBanners.jsx";
-const App = () => {
-  const location = useLocation();
-  const hideNavbar = location.pathname.startsWith("/me");
+import React, { useState } from 'react'
+import ProductListView from './features/products/ProductListView'
+import ProductForm from './features/products/ProductForm'
 
+const App = () => {
+  const [isEdit, setIsEdit] = useState(false);
+  const [productToEdit, setProductToEdit] = useState(null)
+
+  const handleSetProductToEdit = (product) => {
+    setProductToEdit(product)
+    setIsEdit(true)
+  }
+
+     const handleCancelEdit = () => {
+      setIsEdit(false);
+      setProductToEdit(null);
+    };
   return (
     <div>
-      {!hideNavbar && <Navbar />}
-
-      <Routes>
-        {/* Public routes */}
-        <Route path="/" element={<Home />} />
-
-        {/* Dashboard nested routes */}
-        <Route path="/me" element={<DashboardLayout />}>
-          <Route path="add-product" element={<AddProduct />} />
-          <Route path="manage-products" element={<ManageProducts />} />
-          <Route path="add-banner" element={<AddBanner />} />
-          <Route path="manage-banners" element={<ManageBanners />} />
-        </Route>
-      </Routes>
+      <ProductListView onHandleSetProductToEdit={handleSetProductToEdit} />
+      <ProductForm onProductToEdit={productToEdit} onIsEdit={isEdit} onHandleCancelEdit={handleCancelEdit}/>
     </div>
-  );
-};
+  )
+}
 
-export default App;
-
+export default App

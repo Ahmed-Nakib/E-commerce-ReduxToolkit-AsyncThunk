@@ -1,5 +1,4 @@
 # Logs
-
 logs
 *.log
 npm-debug.log*
@@ -11,8 +10,6 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-
-db.json
 *.local
 
 # Editor directories and files
